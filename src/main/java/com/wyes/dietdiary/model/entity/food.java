@@ -8,7 +8,6 @@ import jakarta.persistence.*;
 public class food {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer foodID;
 
     @Column(nullable = false)
