@@ -34,8 +34,10 @@ public class FoodController {
         return ResponseEntity.status(HttpStatus.OK).body(foodList);
     }
 
-
-
-
+    @GetMapping("/findFood/{id}")
+    public Optional<food> getFood(@PathVariable Integer id) {
+        Optional<food> fd = foodservice.findById(id);
+        return fd;
+    }
 
 }
