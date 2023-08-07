@@ -8,6 +8,9 @@ import com.wyes.dietdiary.model.entity.food;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -23,6 +26,34 @@ public class diaryService {
 
     public Iterable<diary> getDiarys(){
         return diarydao.findAll();
+    }
+
+    public Iterable<diary> getDiarysByDateAndCat(String dt,Integer cat){
+
+        List<String> stringList = new ArrayList<>();
+        stringList.add("早餐");
+        stringList.add("中餐");
+        stringList.add("晚餐");
+        stringList.add("點心");
+        stringList.add("宵夜");
+
+        Iterable<diary> diarylist=diarydao.findAll();
+
+        List<diary> target = new ArrayList<diary>();
+
+        diarylist.forEach(target::add);
+
+        List<diary> result = new ArrayList<diary>();
+
+        for (int i = 0; i < target.size(); i++) {
+            Date date=target.get(i).getDiaryDate();
+            String dateToString=String.format("%1$tY-%1$tm-%1$td", date);
+            if(dateToString.equals(dt)&&target.get(i).getMealCategory().equals(stringList.get(cat)))
+            {
+                result.add(target.get(i));
+            }
+        }
+        return result;
     }
 
     public Optional<diary> findById(Integer id) {
