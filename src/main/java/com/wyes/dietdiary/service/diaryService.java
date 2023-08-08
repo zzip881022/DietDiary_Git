@@ -28,27 +28,15 @@ public class diaryService {
         return diarydao.findAll();
     }
 
-    public Iterable<diary> getDiarysByDateAndCat(String dt,Integer cat){
-
-        List<String> stringList = new ArrayList<>();
-        stringList.add("早餐");
-        stringList.add("中餐");
-        stringList.add("晚餐");
-        stringList.add("點心");
-        stringList.add("宵夜");
-
+    public Iterable<diary> getDiarysByDateAndCat(String dt,String cat){
         Iterable<diary> diarylist=diarydao.findAll();
-
         List<diary> target = new ArrayList<diary>();
-
         diarylist.forEach(target::add);
-
         List<diary> result = new ArrayList<diary>();
-
         for (int i = 0; i < target.size(); i++) {
             Date date=target.get(i).getDiaryDate();
             String dateToString=String.format("%1$tY-%1$tm-%1$td", date);
-            if(dateToString.equals(dt)&&target.get(i).getMealCategory().equals(stringList.get(cat)))
+            if(dateToString.equals(dt)&&target.get(i).getMealCategory().equals(cat))
             {
                 result.add(target.get(i));
             }
